@@ -1,0 +1,9 @@
+# Runtime: strategy, backtest engine, and the Alpaca paper-trading harness.
+numpy
+pandas
+scipy
+yfinance
+pyarrow
+# Tests
+pytest
+pyyaml

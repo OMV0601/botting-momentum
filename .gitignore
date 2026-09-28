@@ -1,0 +1,31 @@
+# Secrets — NEVER commit. Keys live in GitHub repo secrets, not here.
+.env
+
+# Market data cache and experiment output.
+# Both are REGENERABLE and large (~1.5 GB combined in the upstream repo).
+# Rebuild with:  python fetch_data.py --n-tickers 2500 --start 2020-01-01 --end <today>
+# Note this is `data/*` and not `data/`: git cannot descend into an excluded
+# directory, so an ignored `data/` would make the negation below unreachable.
+data/*
+results/
+
+# ...except the universe definition, which is NOT a price cache. It is a 19 KB
+# symbol list that paper_trade.py reads at line 75 on every run. Without it the
+# live path cannot start, so it is committed deliberately.
+!data/alpaca_universe2.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Logs
+logs/
+*.log
+
+# OS cruft
+.DS_Store
+Thumbs.db

@@ -1,0 +1,72 @@
+name: close-of-day summary
+
+on:
+  repository_dispatch:
+    types: [close-summary]
+
+  workflow_dispatch:
+
+concurrency:
+  group: close-summary
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  summary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for the close, or skip
+        id: gate
+        env:
+          ALPACA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY_ID }}
+          ALPACA_API_SECRET_KEY: ${{ secrets.ALPACA_API_SECRET_KEY }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          python3 market_wait.py \
+            --until close \
+            --max-wait-min 25 \
+            --grace-sec 150 \
+            --state state/last_summary.json
+
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        if: steps.gate.outputs.run == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Send close-of-day summary
+        if: steps.gate.outputs.run == 'true'
+        env:
+          ALPACA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY_ID }}
+          ALPACA_API_SECRET_KEY: ${{ secrets.ALPACA_API_SECRET_KEY }}
+          ALPACA_ACCOUNT_ID: ${{ vars.ALPACA_ACCOUNT_ID || secrets.ALPACA_ACCOUNT_ID || '' }}
+          ALPACA_LIVE: ${{ vars.ALPACA_LIVE || secrets.ALPACA_LIVE || '' }}
+          MAX_DEPLOY: ${{ vars.MAX_DEPLOY || secrets.MAX_DEPLOY || '' }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NOTIFY_TO: ${{ vars.NOTIFY_TO }}
+          NOTIFY_FROM: ${{ vars.NOTIFY_FROM }}
+        run: python run_daily.py --summary-only
+
+      - name: Commit the summary record
+        if: always() && steps.gate.outputs.run == 'true' 
+        run: |
+          git config user.name  "trading-bot"
+          git config user.email "actions@github.com"
+          git add journal.md state/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "state: close-of-day $(date -u +%Y-%m-%dT%H:%MZ) [skip ci]"
+            for i in 1 2 3; do
+              git push && break || { echo "push failed, retry $i"; sleep $((i*5)); git pull --rebase --autostash; }
+            done
+          fi

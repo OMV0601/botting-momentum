@@ -1,0 +1,27 @@
+name: preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Preflight
+        env:
+          ALPACA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY_ID }}
+          ALPACA_API_SECRET_KEY: ${{ secrets.ALPACA_API_SECRET_KEY }}
+          ALPACA_ACCOUNT_ID: ${{ vars.ALPACA_ACCOUNT_ID || secrets.ALPACA_ACCOUNT_ID || '' }}
+          MAX_DEPLOY: ${{ vars.MAX_DEPLOY || secrets.MAX_DEPLOY || '' }}
+          ALPACA_LIVE: ${{ vars.ALPACA_LIVE || secrets.ALPACA_LIVE || '' }}
+        run: python preflight.py

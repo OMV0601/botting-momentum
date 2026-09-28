@@ -1,0 +1,85 @@
+name: backtest
+
+# Backtests strategy.py from $5,000. Places no orders; read-only permissions.
+# Runs on any push that changes the strategy or the engine, or by hand.
+#
+# Data: Alpaca first (includes delisted companies -- needs the
+# ALPACA_API_KEY_ID / ALPACA_API_SECRET_KEY secrets). Without them, or if that
+# fetch fails, it falls back to Yahoo, which only has surviving companies and
+# makes results look better than they were. The log says which one was used.
+on:
+  push:
+    paths:
+      - "strategy.py"
+      - "backtest.py"
+      - "core/**"
+      - ".github/workflows/backtest.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backtest
+  cancel-in-progress: true
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Week key
+        id: wk
+        run: echo "wk=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      # Same panel all week, so repeat runs are fast and comparable.
+      - name: Restore panel
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: data/panel
+          key: panel-2016-4000-${{ steps.wk.outputs.wk }}
+
+      - name: Fetch panel (Alpaca, includes delisted)
+        id: alpaca
+        if: steps.cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        env:
+          ALPACA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY_ID }}
+          ALPACA_API_SECRET_KEY: ${{ secrets.ALPACA_API_SECRET_KEY }}
+        run: |
+          python fetch_data.py --source alpaca \
+            --start 2016-01-01 --end "$(date -u -d yesterday +%Y-%m-%d)" \
+            --n-tickers 4000 --out data/panel
+
+      - name: Fetch panel (Yahoo fallback, survivors only)
+        if: steps.cache.outputs.cache-hit != 'true' && steps.alpaca.outcome != 'success'
+        run: |
+          python fetch_data.py --source yahoo \
+            --start 2016-01-01 --end "$(date -u +%Y-%m-%d)" \
+            --n-tickers 4000 --out data/panel
+
+      - name: Run the backtest
+        run: |
+          set -o pipefail
+          mkdir -p results
+          python backtest.py --panel data/panel --out results/backtest.json \
+            | tee results/backtest.txt
+
+      - name: Publish results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest
+          path: results/
+          if-no-files-found: warn

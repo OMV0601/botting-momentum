@@ -1,0 +1,49 @@
+name: liquidate (manual reset)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type LIQUIDATE to actually close positions. Anything else = dry run."
+        type: string
+        default: ""
+      allow_closed:
+        description: "Submit even if the market is shut (not recommended)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: trade
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  liquidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Liquidate
+        env:
+          ALPACA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY_ID }}
+          ALPACA_API_SECRET_KEY: ${{ secrets.ALPACA_API_SECRET_KEY }}
+          ALPACA_ACCOUNT_ID: ${{ vars.ALPACA_ACCOUNT_ID || secrets.ALPACA_ACCOUNT_ID || '' }}
+          CONFIRM: ${{ inputs.confirm }}
+          ALLOW_CLOSED: ${{ inputs.allow_closed }}
+        run: |
+          if [ "$ALLOW_CLOSED" = "true" ]; then
+            python liquidate.py --confirm "$CONFIRM" --allow-closed
+          else
+            python liquidate.py --confirm "$CONFIRM"
+          fi
