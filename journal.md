@@ -149,3 +149,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-09-29T13:39:01+00:00  INFO    BUY  MTZ    weight=0.10% delta=$+4.86
 2026-09-29T13:39:01+00:00  INFO    BUY  OKTA   weight=0.10% delta=$+4.86
 2026-09-29T13:39:40+00:00  INFO  run recorded in state/last_run.json
+2026-09-29T20:02:50+00:00  INFO  === momentum close-of-day summary 2026-09-29 ===
+2026-09-29T20:02:50+00:00  INFO  summarising Alpaca paper account PA3HT4JN9ZQY
+2026-09-29T20:02:52+00:00  INFO  session P&L: +3.87 ($5,000.00 at the open -> $5,003.87 at the close, 391 minute marks)
+2026-09-29T20:02:52+00:00  INFO  close-of-day: equity=$5,002.57 positions=$4,967.10 across 68 names (traded today: True)
+2026-09-29T20:02:52+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
