@@ -29,10 +29,11 @@ UNIVERSE (same as the assay bot, so the backtests are comparable)
     All inputs lagged one day.
 
 --------------------------------------------------------------------------
-BACKTEST (2017-2026, Alpaca survivorship-free data, costs included)
+BACKTEST (2017-2026, from $5,000, costs included)
 --------------------------------------------------------------------------
-    CAGR 13.0%   vol 31.9%   Sharpe 0.54   max drawdown -52.3%
-    Typically ~125 names. Turnover ~3% of the book per day.
+    Yahoo (survivors only):  CAGR 15.1%  vol 35.7%  Sharpe 0.57  max DD -55.4%
+    Alpaca (incl. delisted): CAGR 13.0%  vol 31.9%  Sharpe 0.54  max DD -52.3%
+    Typically ~75 names. Turnover ~3% of the book per day.
 
 Long-only, unlevered, no stop-losses. Positions leave when they stop ranking
 in the top 10%.

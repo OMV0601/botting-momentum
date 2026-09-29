@@ -20,11 +20,14 @@ Momentum can crash hard when markets turn sharply. For example, it lost 23% in 2
 
 ## Backtest
 
-Alpaca data including delisted companies, 2017–2026, with trading costs:
+From $5,000, trading costs included:
 
-| $5,000 → (2017–2026) | yearly return | worst drop | Sharpe | names held |
-|---|---|---|---|---|
-| see backtest workflow | **13.0%** | **−52%** | 0.54 | ~125 |
+| Data | Period | $5,000 → | Yearly return | Worst drop | Names held |
+|---|---|---|---|---|---|
+| Yahoo (survivors only, biased high) | 2017–2026 | $19,637 | **15.1%** | **−55%** | ~77 |
+| Alpaca incl. delisted (smaller random sample) | 2017–2026 | — | 13.0% | −52% | — |
+
+Expect something nearer the lower row. Big swings are normal: −17% in 2022, +50% in 2020.
 
 Run it yourself from the **backtest** workflow in the Actions tab, or locally:
 
