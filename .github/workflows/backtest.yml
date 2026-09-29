@@ -48,7 +48,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: data/panel
-          key: panel-2016-4000-${{ steps.wk.outputs.wk }}
+          key: panel-v2-2016-4000-${{ steps.wk.outputs.wk }}
 
       - name: Fetch panel (Alpaca, includes delisted)
         id: alpaca

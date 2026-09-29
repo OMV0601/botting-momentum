@@ -246,7 +246,16 @@ class Backtester:
                 # tens of percent a year. Real desks trade a band for exactly
                 # this reason.
                 if self.rebalance_band > 0:
-                    small = np.abs(delta) < self.rebalance_band * equity_t
+                    # The band is for top-ups only. Opening a position and
+                    # closing one always trade -- otherwise a book whose
+                    # per-name weight is below the band (an equal-weight book
+                    # of 200+ names) can never open anything, and a position
+                    # that shrinks below it can never be sold. The live
+                    # harness (paper_trade.build_plan) applies the same rule.
+                    opening = (shares == 0) & (target_notional > 0)
+                    closing = (shares != 0) & (target_notional == 0)
+                    small = ((np.abs(delta) < self.rebalance_band * equity_t)
+                             & ~opening & ~closing)
                     delta[small] = 0.0
                     target_notional = np.where(small, cur_notional, target_notional)
 

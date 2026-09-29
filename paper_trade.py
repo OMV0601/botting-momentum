@@ -49,6 +49,9 @@ OTHER_BOTS_ACCOUNTS = {"PA318Q9SK8B5"}
 LIVE_BASE = "https://api.alpaca.markets"
 DATA_BASE = "https://data.alpaca.markets"
 
+# Alpaca's smallest fractional order. Anything below it is rejected.
+MIN_ORDER_USD = 1.0
+
 
 def live_enabled() -> bool:
     """True only for a deliberate, explicit opt-in.
@@ -549,8 +552,15 @@ def build_plan(equity: float) -> pd.DataFrame:
                      "current_$": have, "delta_$": want - have, "price": px,
                      "held_qty": float(held_qty.get(sym, 0.0))})
     df = pd.DataFrame(rows)
-    # Skip trades too small to be worth the spread.
-    df["act"] = df["delta_$"].abs() > max(20.0, 0.002 * equity)
+    # The minimum trade size is for TOP-UPS only: nudging a position that is
+    # already about right is not worth the spread. Opening a new position and
+    # fully closing one always go through. Without that, a book of ~300
+    # equal-weight names on $5,000 (~$16 each) never opens anything, and a
+    # position that has shrunk below the minimum can never be sold.
+    min_trade = max(20.0, 0.002 * equity)
+    opening = (df["current_$"].abs() < MIN_ORDER_USD) & (df["target_$"] >= MIN_ORDER_USD)
+    closing = (df["weight"] <= 0) & (df["current_$"].abs() > 0)
+    df["act"] = (df["delta_$"].abs() > min_trade) | opening | closing
     return df.sort_values("target_$", ascending=False)
 
 

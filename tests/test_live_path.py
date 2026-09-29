@@ -978,3 +978,52 @@ def test_a_near_empty_row_inside_the_history_does_not_empty_the_plan(monkeypatch
     # on it -- that would concentrate the account in 2 stocks.
     assert (plan["weight"] > 0).sum() >= 5
     assert plan["weight"].max() < 0.5
+
+
+def _plan_for(monkeypatch, target, held):
+    """build_plan against a fixed target and holdings; no network."""
+    from core.data import Panel
+    syms = sorted(set(target) | set(held))
+    idx = pd.bdate_range("2026-01-01", periods=5)
+    c = pd.DataFrame(10.0, idx, syms)
+    p = Panel(c, c, c, c, c * 1e6, c, survivorship_free=False, source="test")
+    monkeypatch.setattr(pt, "fetch_panel", lambda *a, **k: p)
+    monkeypatch.setattr(pt, "todays_target", lambda *a, **k: pd.Series(target, dtype=float))
+    monkeypatch.setattr(pt, "positions", lambda: dict(held))
+    monkeypatch.setattr(pt, "position_qtys", lambda: {k: v / 10.0 for k, v in held.items()})
+    return pt.build_plan(5000.0).set_index("symbol")
+
+
+def test_small_new_positions_are_opened(monkeypatch):
+    """Found in the first MA dry run: 305 names at ~$16 each, 0 orders."""
+    target = {f"S{i}": 1 / 305 for i in range(305)}
+    plan = _plan_for(monkeypatch, target, {})
+    assert plan["act"].sum() == 305
+
+
+def test_small_top_ups_are_still_skipped(monkeypatch):
+    plan = _plan_for(monkeypatch, {"A": 0.5, "B": 0.5}, {"A": 2495.0, "B": 2400.0})
+    assert not plan.loc["A", "act"]          # $5 off target: leave it
+    assert plan.loc["B", "act"]              # $100 off target: trade
+
+
+def test_a_position_below_the_minimum_can_still_be_closed(monkeypatch):
+    plan = _plan_for(monkeypatch, {"A": 1.0}, {"A": 4990.0, "OLD": 12.0})
+    assert plan.loc["OLD", "act"]
+
+
+def test_engine_opens_positions_smaller_than_the_band():
+    """Same rule in the backtest: a 0.4% position with a 0.5% band opens."""
+    from core.costs import CostModel
+    from core.data import Panel
+    from core.engine import Backtester
+    idx = pd.bdate_range("2024-01-01", periods=60)
+    cols = [f"S{i}" for i in range(250)]
+    c = pd.DataFrame(20.0, idx, cols)
+    p = Panel(c, c, c, c, c * 1e6, c, survivorship_free=True, source="test")
+    bt = Backtester(p, CostModel(), initial_capital=5000.0, min_price=3.0,
+                    max_price=1e9, min_dollar_volume=5e6, rebalance_band=0.005,
+                    spread_model="tiered", allow_short=False, max_gross=1.0)
+    w = pd.DataFrame(1 / 250, idx, cols)
+    res = bt.run(w)
+    assert res.n_positions.iloc[-1] == 250
