@@ -98,3 +98,14 @@ def test_ma_holds_exactly_the_uptrends():
     up = S.in_uptrend(c).iloc[-1] & S.eligible(c, v, o).iloc[-1]
     assert set(t.index) == set(up[up].index)
     assert np.allclose(t.to_numpy(), 1 / up.sum())
+
+
+@pytest.mark.skipif(S.NAME != "moving-average", reason="MA-specific")
+def test_ma_survives_a_single_missing_bar():
+    """One missing daily bar must not drop a stock for the next 200 days."""
+    c, v, o = panel()
+    up = S.in_uptrend(c).iloc[-1]
+    name = up[up].index[0]
+    c2 = c.copy()
+    c2.iloc[-50, c2.columns.get_loc(name)] = np.nan
+    assert bool(S.in_uptrend(c2).iloc[-1][name])

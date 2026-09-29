@@ -926,3 +926,55 @@ def test_executing_run_requires_an_account_pin(monkeypatch, rd):
     monkeypatch.setattr(sys, "argv", ["run_daily.py", "--execute"])
     with pytest.raises(RuntimeError, match="ALPACA_ACCOUNT_ID is not set"):
         rd.main()
+
+
+def _live_panel(n_days=600, n_names=60, seed=3):
+    from core.data import Panel
+    rng = np.random.default_rng(seed)
+    idx = pd.bdate_range("2023-06-19", periods=n_days)
+    cols = [f"T{i}" for i in range(n_names)]
+    drift = rng.normal(0.0006, 0.0006, n_names)
+    c = pd.DataFrame(50 * np.exp(np.cumsum(rng.normal(drift, 0.015, (n_days, n_names)), 0)),
+                     idx, cols)
+    v = pd.DataFrame(1e6, idx, cols)
+    return Panel(c.shift(1).fillna(c), c * 1.01, c * 0.99, c, v, c,
+                 survivorship_free=False, source="yahoo")
+
+
+def _plan_with(monkeypatch, panel):
+    monkeypatch.setattr(pt, "fetch_panel", lambda *a, **k: panel)
+    monkeypatch.setattr(pt, "positions", lambda: {})
+    monkeypatch.setattr(pt, "position_qtys", lambda: {})
+    return pt.build_plan(5000.0)
+
+
+def test_a_near_empty_last_row_does_not_empty_the_plan(monkeypatch):
+    """Reproduces the first live dry run (2026-09-29): Yahoo returned a final
+    date with almost no bars, every name looked untradable on it, and the run
+    died with 'strategy produced no target positions today'."""
+    p = _live_panel()
+    extra = p.close.index[-1] + pd.offsets.BDay(1)
+    for fld in ["open", "high", "low", "close", "volume", "adj_close"]:
+        df = getattr(p, fld)
+        row = pd.DataFrame(np.nan, index=[extra], columns=df.columns)
+        row.iloc[0, :2] = df.iloc[-1, :2].to_numpy()     # 2 of 60 names printed
+        setattr(p, fld, pd.concat([df, row]))
+    plan = _plan_with(monkeypatch, p)
+    # A partial row must not shrink the book to the few names that printed
+    # on it -- that would concentrate the account in 2 stocks.
+    assert (plan["weight"] > 0).sum() >= 5
+    assert plan["weight"].max() < 0.5
+
+
+def test_a_near_empty_row_inside_the_history_does_not_empty_the_plan(monkeypatch):
+    p = _live_panel()
+    d = p.close.index[-30]
+    for fld in ["open", "high", "low", "close", "volume", "adj_close"]:
+        df = getattr(p, fld).copy()
+        df.loc[d, df.columns[2:]] = np.nan
+        setattr(p, fld, df)
+    plan = _plan_with(monkeypatch, p)
+    # A partial row must not shrink the book to the few names that printed
+    # on it -- that would concentrate the account in 2 stocks.
+    assert (plan["weight"] > 0).sum() >= 5
+    assert plan["weight"].max() < 0.5

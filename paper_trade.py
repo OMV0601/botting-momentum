@@ -37,6 +37,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from core.data import AlpacaSource, Panel
+import strategy
 from strategy import DESCRIPTION, NAME, todays_target
 
 PAPER_BASE = "https://paper-api.alpaca.markets"
@@ -495,12 +496,44 @@ def _assert_coverage(panel, syms) -> None:
     print(f"[data] coverage {frac:.1%} — above the {floor:.0%} floor", flush=True)
 
 
+def _sparse_rows(panel, min_coverage: float = 0.5) -> list:
+    cov = panel.close.notna().sum(axis=1) / max(panel.close.shape[1], 1)
+    return [(d, c) for d, c in cov.items() if c < min_coverage]
+
+
+def _explain_empty_target(panel) -> None:
+    """Say WHY nothing was picked, so a failed run can be fixed from its log."""
+    c = panel.close.astype(float)
+    tail = c.notna().sum(axis=1).tail(3)
+    print("[plan] last dates in the price panel (names with a close):")
+    for d, n in tail.items():
+        print(f"         {d.date()}  {n}/{c.shape[1]}")
+    try:
+        elig = strategy.eligible(c, panel.volume.astype(float), panel.open.astype(float))
+        print(f"[plan] eligible names on the last date: {int(elig.iloc[-1].sum())}")
+    except Exception as exc:  # diagnostics must never mask the real error
+        print(f"[plan] could not compute eligibility: {exc}")
+
+
 def build_plan(equity: float) -> pd.DataFrame:
     panel = fetch_panel()
+    # Yahoo sometimes returns a date where almost no symbol has a bar -- most
+    # often a partial row for the current day. One such row breaks every
+    # rolling window it falls in and, as the last row, makes every name look
+    # untradable. The backtest drops these (backtest.py: trim_sparse_rows), so
+    # the live signal must see the same thing.
+    sparse = _sparse_rows(panel)
+    if sparse:
+        print(f"[data] dropping {len(sparse)} near-empty date(s): "
+              + ", ".join(f"{d.date()} ({c:.0%})" for d, c in sparse[:5]))
+        panel = panel.trim_sparse_rows(0.5)
+    print(f"[data] price panel {panel.close.index[0].date()} -> "
+          f"{panel.close.index[-1].date()}, {panel.close.shape[0]} days")
     tgt = todays_target(panel.close.astype(float),
                         panel.volume.astype(float),
                         panel.open.astype(float))
     if tgt.empty:
+        _explain_empty_target(panel)
         sys.exit("[plan] strategy produced no target positions today")
     held = positions()
     held_qty = position_qtys()
