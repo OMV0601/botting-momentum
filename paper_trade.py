@@ -52,6 +52,13 @@ DATA_BASE = "https://data.alpaca.markets"
 # Alpaca's smallest fractional order. Anything below it is rejected.
 MIN_ORDER_USD = 1.0
 
+# Alpaca allows ~200 API requests a minute. An equal-weight book of ~300 names
+# sends ~300 orders on its first day, so orders are paced to stay under the
+# limit, and an HTTP 429 (too many requests) is retried instead of recorded as
+# a rejected order.
+ORDER_PAUSE_SEC = 0.35
+ORDER_RETRIES = 4
+
 
 def live_enabled() -> bool:
     """True only for a deliberate, explicit opt-in.
@@ -564,6 +571,20 @@ def build_plan(equity: float) -> pd.DataFrame:
     return df.sort_values("target_$", ascending=False)
 
 
+def _post_order(order: dict) -> dict:
+    """POST one order, backing off and retrying only on HTTP 429."""
+    import urllib.error
+    for attempt in range(1, ORDER_RETRIES + 1):
+        try:
+            return api("/v2/orders", "POST", order)
+        except urllib.error.HTTPError as exc:
+            if exc.code != 429 or attempt == ORDER_RETRIES:
+                raise
+            wait = 5.0 * attempt
+            print(f"  rate-limited on {order['symbol']}; retrying in {wait:.0f}s")
+            time.sleep(wait)
+
+
 def submit(df: pd.DataFrame):
     """Returns (accepted_count, [(symbol, reason), ...]) so callers can report
     rejections. Previously this only printed them, which meant a failed exit
@@ -616,8 +637,10 @@ def submit(df: pd.DataFrame):
         order = {"symbol": r["symbol"], "qty": str(qty),
                  "side": side,
                  "type": "market", "time_in_force": "day"}
+        if sent or failed:
+            time.sleep(ORDER_PAUSE_SEC)
         try:
-            o = api("/v2/orders", "POST", order)
+            o = _post_order(order)
             print(f"  SENT {order['side']:<4} {qty:>10} {r['symbol']:<6} id={o.get('id','?')[:8]}")
             sent += 1
         except Exception as exc:

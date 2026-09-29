@@ -1027,3 +1027,36 @@ def test_engine_opens_positions_smaller_than_the_band():
     w = pd.DataFrame(1 / 250, idx, cols)
     res = bt.run(w)
     assert res.n_positions.iloc[-1] == 250
+
+
+def test_a_rate_limited_order_is_retried_not_rejected(monkeypatch):
+    """~300 first-day orders exceed Alpaca's ~200 requests/minute; a 429 must
+    be retried rather than counted as a rejection."""
+    import io
+    import urllib.error
+    calls = []
+
+    def fake_api(path, method="GET", body=None, base=None):
+        calls.append(body["symbol"])
+        if len(calls) == 1:
+            raise urllib.error.HTTPError(path, 429, "Too Many Requests", {}, io.BytesIO(b""))
+        return {"id": "abc12345"}
+
+    monkeypatch.setattr(pt, "api", fake_api)
+    monkeypatch.setattr(pt.time, "sleep", lambda s: None)
+    plan = pd.DataFrame([{"symbol": "AAA", "weight": 0.5, "target_$": 100.0,
+                          "current_$": 0.0, "delta_$": 100.0, "price": 10.0,
+                          "held_qty": 0.0, "act": True}])
+    sent, failed = pt.submit(plan)
+    assert (sent, failed) == (1, []) and calls == ["AAA", "AAA"]
+
+
+def test_orders_are_paced(monkeypatch):
+    pauses = []
+    monkeypatch.setattr(pt, "api", lambda *a, **k: {"id": "abc12345"})
+    monkeypatch.setattr(pt.time, "sleep", lambda s: pauses.append(s))
+    plan = pd.DataFrame([{"symbol": f"S{i}", "weight": 0.1, "target_$": 100.0,
+                          "current_$": 0.0, "delta_$": 100.0, "price": 10.0,
+                          "held_qty": 0.0, "act": True} for i in range(5)])
+    assert pt.submit(plan)[0] == 5
+    assert pauses == [pt.ORDER_PAUSE_SEC] * 4
