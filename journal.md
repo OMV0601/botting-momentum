@@ -69,3 +69,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-09-29T01:13:45+00:00  INFO    BUY  ALAB   weight=0.49% delta=$+24.30
 2026-09-29T01:13:45+00:00  INFO    BUY  GEV    weight=0.49% delta=$+24.30
 2026-09-29T01:13:45+00:00  INFO  DRY RUN — nothing sent
+2026-09-29T06:36:05+00:00  INFO  === momentum close-of-day summary 2026-09-29 ===
+2026-09-29T06:36:06+00:00  INFO  summarising Alpaca paper account PA3HT4JN9ZQY
+2026-09-29T06:36:07+00:00  INFO  session P&L: +0.00 ($5,000.00 at the open -> $5,000.00 at the close, 391 minute marks)
+2026-09-29T06:36:07+00:00  INFO  close-of-day: equity=$5,000.00 positions=$0.00 across 0 names (traded today: False)
+2026-09-29T06:36:07+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
