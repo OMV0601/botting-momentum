@@ -1,3 +1,4 @@
 date,session_open,session_close,session_pnl,equity,deployed,position_value,n_positions,orders,sent,rejected,turnover
 2026-09-29,5000.0,5000.0,0.0,5000.0,0.0,0.0,0,,,,
 2026-09-29,5000.0,5003.87,3.87,5002.57,5000.0,4967.1,68,68,68,0,4917.4
+2026-09-30,5022.72,4987.53,-35.19,4986.12,5027.27,4950.3,68,2,2,0,9.87
