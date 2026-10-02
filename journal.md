@@ -189,3 +189,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-02T13:38:55+00:00  INFO  plan: 1 orders, $21.02 turnover (0.41% of deployed capital), 69 target names
 2026-10-02T13:38:55+00:00  INFO    SELL KLAC   weight=1.75% delta=$-21.02
 2026-10-02T13:38:57+00:00  INFO  run recorded in state/last_run.json
+2026-10-02T20:02:48+00:00  INFO  === momentum close-of-day summary 2026-10-02 ===
+2026-10-02T20:02:49+00:00  INFO  summarising Alpaca paper account PA3HT4JN9ZQY
+2026-10-02T20:02:51+00:00  INFO  session P&L: +19.48 ($5,158.58 at the open -> $5,178.06 at the close, 391 minute marks)
+2026-10-02T20:02:51+00:00  INFO  close-of-day: equity=$5,179.76 positions=$5,127.57 across 69 names (traded today: True)
+2026-10-02T20:02:51+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
