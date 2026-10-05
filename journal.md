@@ -194,3 +194,23 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-02T20:02:51+00:00  INFO  session P&L: +19.48 ($5,158.58 at the open -> $5,178.06 at the close, 391 minute marks)
 2026-10-02T20:02:51+00:00  INFO  close-of-day: equity=$5,179.76 positions=$5,127.57 across 69 names (traded today: True)
 2026-10-02T20:02:51+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
+2026-10-05T13:30:59+00:00  INFO  === momentum daily run 2026-10-05 (execute=True) ===
+2026-10-05T13:30:59+00:00  INFO  trading Alpaca paper account PA3HT4JN9ZQY
+2026-10-05T13:31:00+00:00  INFO  account status=ACTIVE equity=$5,182.03 cash=$52.16
+2026-10-05T13:38:37+00:00  INFO  paper endpoint (set ALPACA_LIVE=true for real money)
+2026-10-05T13:38:38+00:00  INFO  account permits 4x margin; plan deploys 98.83% of the capital it was handed, so no leverage is used
+2026-10-05T13:38:38+00:00  INFO  plan: 13 orders, $233.64 turnover (4.51% of deployed capital), 69 target names
+2026-10-05T13:38:38+00:00  INFO    BUY  CRL    weight=1.75% delta=$+23.17
+2026-10-05T13:38:38+00:00  INFO    BUY  APA    weight=1.75% delta=$+21.59
+2026-10-05T13:38:38+00:00  INFO    BUY  TGT    weight=1.26% delta=$+23.19
+2026-10-05T13:38:38+00:00  INFO    SELL PWR    weight=1.17% delta=$-20.73
+2026-10-05T13:38:38+00:00  INFO    BUY  KNX    weight=1.17% delta=$+20.52
+2026-10-05T13:38:38+00:00  INFO    BUY  MRK    weight=1.07% delta=$+23.00
+2026-10-05T13:38:38+00:00  INFO    BUY  FCX    weight=0.87% delta=$+20.99
+2026-10-05T13:38:38+00:00  INFO    BUY  OKTA   weight=0.49% delta=$+20.02
+2026-10-05T13:38:38+00:00  INFO    SELL TSM    weight=0.39% delta=$-21.08
+2026-10-05T13:38:38+00:00  INFO    BUY  CHYM   weight=0.10% delta=$+5.04
+2026-10-05T13:38:38+00:00  INFO    BUY  OVV    weight=0.10% delta=$+5.04
+2026-10-05T13:38:38+00:00  INFO    SELL GOOGL  weight=0.00% delta=$-14.63
+2026-10-05T13:38:38+00:00  INFO    SELL GOOG   weight=0.00% delta=$-14.66
+2026-10-05T13:38:46+00:00  INFO  run recorded in state/last_run.json

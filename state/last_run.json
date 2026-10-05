@@ -1,9 +1,9 @@
 {
-  "date": "2026-10-02",
-  "orders": 1,
-  "turnover": 21.02,
-  "equity": 5144.24,
-  "deployed": 5144.24,
-  "sent": 1,
+  "date": "2026-10-05",
+  "orders": 13,
+  "turnover": 233.64,
+  "equity": 5182.03,
+  "deployed": 5182.03,
+  "sent": 13,
   "rejected": 0
 }
