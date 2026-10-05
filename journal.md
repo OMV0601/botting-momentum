@@ -214,3 +214,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-05T13:38:38+00:00  INFO    SELL GOOGL  weight=0.00% delta=$-14.63
 2026-10-05T13:38:38+00:00  INFO    SELL GOOG   weight=0.00% delta=$-14.66
 2026-10-05T13:38:46+00:00  INFO  run recorded in state/last_run.json
+2026-10-05T20:02:48+00:00  INFO  === momentum close-of-day summary 2026-10-05 ===
+2026-10-05T20:02:48+00:00  INFO  summarising Alpaca paper account PA3HT4JN9ZQY
+2026-10-05T20:02:50+00:00  INFO  session P&L: +22.75 ($5,185.78 at the open -> $5,208.53 at the close, 391 minute marks)
+2026-10-05T20:02:50+00:00  INFO  close-of-day: equity=$5,207.46 positions=$5,245.62 across 69 names (traded today: True)
+2026-10-05T20:02:50+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
