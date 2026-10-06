@@ -298,3 +298,82 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-06T00:54:03+00:00  INFO    BUY  OVV    weight=0.10% delta=$+4.86
 2026-10-06T00:54:03+00:00  INFO    BUY  NEM    weight=0.10% delta=$+4.86
 2026-10-06T00:54:03+00:00  INFO  DRY RUN — nothing sent
+2026-10-06T13:31:04+00:00  INFO  === momentum daily run 2026-10-06 (execute=True) ===
+2026-10-06T13:31:04+00:00  INFO  trading Alpaca LIVE account 351932452
+2026-10-06T13:31:04+00:00  INFO  account status=ACTIVE equity=$5,010.16 cash=$5,010.16
+2026-10-06T13:31:04+00:00  INFO  MAX_DEPLOY: sizing as if the account held $5,000.00, not its real $5,010.16
+2026-10-06T13:38:24+00:00  LIVE  *** LIVE TRADING — REAL MONEY — account 351932452 capped at $5,000.00 ***
+2026-10-06T13:38:24+00:00  INFO  account permits 4x margin; plan deploys 99.03% of the capital it was handed, so no leverage is used
+2026-10-06T13:38:24+00:00  INFO  plan: 70 orders, $4,951.41 turnover (99.03% of deployed capital), 70 target names
+2026-10-06T13:38:24+00:00  INFO    BUY  AMD    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  AMAT   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  CIEN   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  CNC    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  COHR   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  ATI    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  LITE   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  SOXL   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  SOXX   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  STX    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  DOCN   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  FIX    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  DELL   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  LRCX   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  KEYS   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  MPC    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  JBHT   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  INTC   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  GLW    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  HPE    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  FTNT   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  FLEX   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  SNDK   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  MU     weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  MRVL   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  NUE    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  TER    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  WDC    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  VLO    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  TSEM   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  MUU    weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  MRNA   weight=2.04% delta=$+102.04
+2026-10-06T13:38:24+00:00  INFO    BUY  VRT    weight=1.85% delta=$+92.32
+2026-10-06T13:38:24+00:00  INFO    BUY  APA    weight=1.85% delta=$+92.32
+2026-10-06T13:38:24+00:00  INFO    BUY  CRL    weight=1.85% delta=$+92.32
+2026-10-06T13:38:24+00:00  INFO    BUY  PANW   weight=1.85% delta=$+92.32
+2026-10-06T13:38:24+00:00  INFO    BUY  FDX    weight=1.85% delta=$+92.32
+2026-10-06T13:38:24+00:00  INFO    BUY  CAT    weight=1.85% delta=$+92.32
+2026-10-06T13:38:24+00:00  INFO    BUY  PSX    weight=1.65% delta=$+82.60
+2026-10-06T13:38:24+00:00  INFO    BUY  STLD   weight=1.55% delta=$+77.75
+2026-10-06T13:38:24+00:00  INFO    BUY  KLAC   weight=1.55% delta=$+77.75
+2026-10-06T13:38:24+00:00  INFO    BUY  CRWD   weight=1.46% delta=$+72.89
+2026-10-06T13:38:24+00:00  INFO    BUY  DDOG   weight=1.36% delta=$+68.03
+2026-10-06T13:38:24+00:00  INFO    BUY  TGT    weight=1.36% delta=$+68.03
+2026-10-06T13:38:24+00:00  INFO    BUY  MXL    weight=1.26% delta=$+63.17
+2026-10-06T13:38:24+00:00  INFO    BUY  KNX    weight=1.26% delta=$+63.17
+2026-10-06T13:38:24+00:00  INFO    BUY  MRK    weight=1.17% delta=$+58.31
+2026-10-06T13:38:24+00:00  INFO    BUY  PWR    weight=1.07% delta=$+53.45
+2026-10-06T13:38:24+00:00  INFO    BUY  TRGP   weight=1.07% delta=$+53.45
+2026-10-06T13:38:24+00:00  INFO    BUY  FCX    weight=0.97% delta=$+48.59
+2026-10-06T13:38:24+00:00  INFO    BUY  STT    weight=0.78% delta=$+38.87
+2026-10-06T13:38:24+00:00  INFO    BUY  FSLY   weight=0.78% delta=$+38.87
+2026-10-06T13:38:24+00:00  INFO    BUY  ALB    weight=0.78% delta=$+38.87
+2026-10-06T13:38:24+00:00  INFO    BUY  CSCO   weight=0.58% delta=$+29.15
+2026-10-06T13:38:24+00:00  INFO    BUY  WBD    weight=0.58% delta=$+29.15
+2026-10-06T13:38:24+00:00  INFO    BUY  OKTA   weight=0.58% delta=$+29.15
+2026-10-06T13:38:24+00:00  INFO    BUY  ROST   weight=0.39% delta=$+19.44
+2026-10-06T13:38:24+00:00  INFO    BUY  GEV    weight=0.29% delta=$+14.58
+2026-10-06T13:38:24+00:00  INFO    BUY  SLB    weight=0.29% delta=$+14.58
+2026-10-06T13:38:24+00:00  INFO    BUY  LLY    weight=0.29% delta=$+14.58
+2026-10-06T13:38:24+00:00  INFO    BUY  TSM    weight=0.29% delta=$+14.58
+2026-10-06T13:38:24+00:00  INFO    BUY  ALAB   weight=0.19% delta=$+9.72
+2026-10-06T13:38:24+00:00  INFO    BUY  ANF    weight=0.19% delta=$+9.72
+2026-10-06T13:38:24+00:00  INFO    BUY  ON     weight=0.19% delta=$+9.72
+2026-10-06T13:38:24+00:00  INFO    BUY  JBL    weight=0.19% delta=$+9.72
+2026-10-06T13:38:24+00:00  INFO    BUY  CHYM   weight=0.10% delta=$+4.86
+2026-10-06T13:38:24+00:00  INFO    BUY  CASY   weight=0.10% delta=$+4.86
+2026-10-06T13:38:24+00:00  INFO    BUY  NEM    weight=0.10% delta=$+4.86
+2026-10-06T13:38:24+00:00  INFO    BUY  OVV    weight=0.10% delta=$+4.86
+2026-10-06T13:38:24+00:00  INFO    BUY  ZETA   weight=0.10% delta=$+4.86
+2026-10-06T13:38:53+00:00  WARN  order rejected: WBD — HTTP Error 422: Unprocessable Entity
+2026-10-06T13:38:53+00:00  INFO  run recorded in state/last_run.json
