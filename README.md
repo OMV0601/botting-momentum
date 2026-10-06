@@ -1,6 +1,7 @@
 # botting-momentum
 
-An automated **momentum** strategy for an Alpaca **paper** account, $5,000 starting capital.
+An automated **momentum** strategy, $5,000 starting capital. **Trading real money** on Alpaca
+since 2026-10-06 (paper before that; see `state/history_paper.csv`).
 
 12-1 price momentum: buy the top 10% of stocks by their last-12-months return (skipping the latest month), equal weight, each pick held about a month.
 

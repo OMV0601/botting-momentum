@@ -1,7 +1,9 @@
 # botting-momentum — agent instructions
 
 This repo runs the **momentum** strategy (`strategy.py`) against an Alpaca
-**paper** account that starts with $5,000. Equities only; never query, analyze or
+account. It ran on paper (PA3HT4JN9ZQY) from 2026-09-29, and was moved to the
+owner's **live, real-money** account at their explicit instruction on
+2026-10-06. The paper record is kept in `state/history_paper.csv`. Equities only; never query, analyze or
 trade cryptocurrency.
 
 ## Rules
@@ -10,17 +12,20 @@ trade cryptocurrency.
    unless `ALPACA_LIVE` is exactly `true` AND `ALPACA_ACCOUNT_ID` and
    `MAX_DEPLOY` are set; the API key prefix must match (PK = paper, AK = live).
    Do not relax this. `tests/test_live_guard.py` pins it.
-2. **Its own account only.** An executing run requires `ALPACA_ACCOUNT_ID`, and
+2. **One bot per account.** The live account was the assay bot's
+   (OMV0601/botting-it-up), which is halted and must stay off it: two bots
+   on one account would each sell the other's positions.
+3. **Its own account only.** An executing run requires `ALPACA_ACCOUNT_ID`, and
    `paper_trade.assert_expected_account()` refuses any other account, including
    the assay bot's (`OTHER_BOTS_ACCOUNTS`).
-3. **Long-only, unlevered, no shorting.** `run_daily.py` asserts gross <= 1.0
+4. **Long-only, unlevered, no shorting.** `run_daily.py` asserts gross <= 1.0
    and no negative weights before sending anything.
-4. **No stop-losses by design.** Exits come from the strategy rule itself
+5. **No stop-losses by design.** Exits come from the strategy rule itself
    during the daily run. Don't bolt stops on; that changes what's being tested.
-5. **The daily run matters.** A missed day leaves the book off-target.
-6. **Halting** needs no code change: `HALT` file in the repo root, or the
+6. **The daily run matters.** A missed day leaves the book off-target.
+7. **Halting** needs no code change: `HALT` file in the repo root, or the
    `TRADING_ENABLED` variable set to `false`.
-7. **Log every action** to `journal.md` (`run_daily.py` already does).
+8. **Log every action** to `journal.md` (`run_daily.py` already does).
 
 ## The strategy
 

@@ -219,3 +219,4 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-05T20:02:50+00:00  INFO  session P&L: +22.75 ($5,185.78 at the open -> $5,208.53 at the close, 391 minute marks)
 2026-10-05T20:02:50+00:00  INFO  close-of-day: equity=$5,207.46 positions=$5,245.62 across 69 names (traded today: True)
 2026-10-05T20:02:50+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
+2026-10-06T00:28:34+00:00  OPS   switching to the LIVE account at the owner's request (2026-10-06). Paper record (PA3HT4JN9ZQY, 2026-09-29 -> 2026-10-05, $5,000 -> $5,207) moved to state/history_paper.csv; state/history.csv from here is the live account only.
