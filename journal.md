@@ -377,3 +377,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-06T13:38:24+00:00  INFO    BUY  ZETA   weight=0.10% delta=$+4.86
 2026-10-06T13:38:53+00:00  WARN  order rejected: WBD — HTTP Error 422: Unprocessable Entity
 2026-10-06T13:38:53+00:00  INFO  run recorded in state/last_run.json
+2026-10-06T20:02:49+00:00  INFO  === momentum close-of-day summary 2026-10-06 ===
+2026-10-06T20:02:50+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-06T20:02:52+00:00  INFO  session P&L: -19.52 ($5,010.16 at the open -> $4,990.64 at the close, 391 minute marks)
+2026-10-06T20:02:52+00:00  INFO  close-of-day: equity=$4,991.64 positions=$4,943.56 across 69 names (traded today: True)
+2026-10-06T20:02:52+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
