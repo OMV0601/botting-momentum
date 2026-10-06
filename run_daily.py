@@ -292,7 +292,7 @@ def close_of_day_summary(today: str) -> int:
     # Places no orders, but it does state a balance as the day's result. A
     # figure read off the wrong account is worse than no email at all.
     acct_no = pt.assert_expected_account()
-    log(f"summarising Alpaca paper account {acct_no}")
+    log(f"summarising Alpaca {'LIVE' if pt.live_enabled() else 'paper'} account {acct_no}")
 
     equity, cash, status = pt.account()
     held = pt.positions()
@@ -485,7 +485,7 @@ def main() -> int:
             "ALPACA_ACCOUNT_ID is not set. An executing run must be pinned to "
             "this bot's own dedicated account; set the repository variable.")
     acct_no = pt.assert_expected_account()
-    log(f"trading Alpaca paper account {acct_no}")
+    log(f"trading Alpaca {'LIVE' if pt.live_enabled() else 'paper'} account {acct_no}")
 
     prev_equity = previous_equity()
     # Captured here, next to prev_equity and for the same reason: record_run()
