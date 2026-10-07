@@ -391,3 +391,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-07T13:39:29+00:00  INFO  plan: 1 orders, $4.94 turnover (0.10% of deployed capital), 68 target names
 2026-10-07T13:39:29+00:00  INFO    SELL CASY   weight=0.00% delta=$-4.94
 2026-10-07T13:39:31+00:00  INFO  run recorded in state/last_run.json
+2026-10-07T20:02:52+00:00  INFO  === momentum close-of-day summary 2026-10-07 ===
+2026-10-07T20:02:53+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-07T20:02:55+00:00  INFO  session P&L: +46.45 ($4,898.02 at the open -> $4,944.47 at the close, 391 minute marks)
+2026-10-07T20:02:55+00:00  INFO  close-of-day: equity=$4,944.01 positions=$4,890.95 across 68 names (traded today: True)
+2026-10-07T20:02:55+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
