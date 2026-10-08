@@ -405,3 +405,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-08T13:37:36+00:00  INFO  plan: 1 orders, $10.18 turnover (0.21% of deployed capital), 67 target names
 2026-10-08T13:37:36+00:00  INFO    SELL ALAB   weight=0.00% delta=$-10.18
 2026-10-08T13:37:39+00:00  INFO  run recorded in state/last_run.json
+2026-10-08T20:02:50+00:00  INFO  === momentum close-of-day summary 2026-10-08 ===
+2026-10-08T20:02:50+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-08T20:02:52+00:00  INFO  session P&L: -39.03 ($4,880.59 at the open -> $4,841.56 at the close, 391 minute marks)
+2026-10-08T20:02:52+00:00  INFO  close-of-day: equity=$4,841.63 positions=$4,778.44 across 67 names (traded today: True)
+2026-10-08T20:02:52+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
