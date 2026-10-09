@@ -420,3 +420,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-09T13:39:09+00:00  INFO    BUY  MXL    weight=1.65% delta=$+21.90
 2026-10-09T13:39:09+00:00  INFO    SELL TSM    weight=0.00% delta=$-13.83
 2026-10-09T13:39:12+00:00  INFO  run recorded in state/last_run.json
+2026-10-09T20:02:48+00:00  INFO  === momentum close-of-day summary 2026-10-09 ===
+2026-10-09T20:02:49+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-09T20:02:50+00:00  INFO  session P&L: +5.73 ($4,910.98 at the open -> $4,916.71 at the close, 391 minute marks)
+2026-10-09T20:02:50+00:00  INFO  close-of-day: equity=$4,916.83 positions=$4,862.84 across 66 names (traded today: True)
+2026-10-09T20:02:50+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
