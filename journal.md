@@ -438,3 +438,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-12T13:40:17+00:00  INFO    SELL CSCO   weight=0.19% delta=$-20.77
 2026-10-12T13:40:17+00:00  INFO    SELL ANF    weight=0.00% delta=$-9.89
 2026-10-12T13:40:23+00:00  INFO  run recorded in state/last_run.json
+2026-10-12T20:02:50+00:00  INFO  === momentum close-of-day summary 2026-10-12 ===
+2026-10-12T20:02:50+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-12T20:02:51+00:00  INFO  session P&L: -91.20 ($4,877.47 at the open -> $4,786.27 at the close, 391 minute marks)
+2026-10-12T20:02:51+00:00  INFO  close-of-day: equity=$4,785.85 positions=$4,630.21 across 65 names (traded today: True)
+2026-10-12T20:02:51+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
