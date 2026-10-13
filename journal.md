@@ -443,3 +443,16 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-12T20:02:51+00:00  INFO  session P&L: -91.20 ($4,877.47 at the open -> $4,786.27 at the close, 391 minute marks)
 2026-10-12T20:02:51+00:00  INFO  close-of-day: equity=$4,785.85 positions=$4,630.21 across 65 names (traded today: True)
 2026-10-12T20:02:51+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
+2026-10-13T13:31:01+00:00  INFO  === momentum daily run 2026-10-13 (execute=True) ===
+2026-10-13T13:31:02+00:00  INFO  trading Alpaca LIVE account 351932452
+2026-10-13T13:31:02+00:00  INFO  account status=ACTIVE equity=$4,677.29 cash=$155.87
+2026-10-13T13:31:02+00:00  INFO  MAX_DEPLOY=$5,000.00 is above real equity $4,677.29; using real equity
+2026-10-13T13:35:49+00:00  LIVE  *** LIVE TRADING — REAL MONEY — account 351932452 capped at $5,000.00 ***
+2026-10-13T13:35:49+00:00  INFO  account permits 4x margin; plan deploys 99.03% of the capital it was handed, so no leverage is used
+2026-10-13T13:35:49+00:00  INFO  plan: 5 orders, $74.83 turnover (1.60% of deployed capital), 67 target names
+2026-10-13T13:35:49+00:00  INFO    BUY  SOXL   weight=2.04% delta=$+22.50
+2026-10-13T13:35:49+00:00  INFO    SELL FDX    weight=1.55% delta=$-21.12
+2026-10-13T13:35:49+00:00  INFO    BUY  SLB    weight=0.78% delta=$+22.12
+2026-10-13T13:35:49+00:00  INFO    BUY  EXPD   weight=0.10% delta=$+4.55
+2026-10-13T13:35:49+00:00  INFO    BUY  NTAP   weight=0.10% delta=$+4.55
+2026-10-13T13:35:54+00:00  INFO  run recorded in state/last_run.json
