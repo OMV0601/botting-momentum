@@ -456,3 +456,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-13T13:35:49+00:00  INFO    BUY  EXPD   weight=0.10% delta=$+4.55
 2026-10-13T13:35:49+00:00  INFO    BUY  NTAP   weight=0.10% delta=$+4.55
 2026-10-13T13:35:54+00:00  INFO  run recorded in state/last_run.json
+2026-10-13T20:02:46+00:00  INFO  === momentum close-of-day summary 2026-10-13 ===
+2026-10-13T20:02:47+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-13T20:02:48+00:00  INFO  session P&L: +83.55 ($4,682.06 at the open -> $4,765.61 at the close, 391 minute marks)
+2026-10-13T20:02:48+00:00  INFO  close-of-day: equity=$4,766.21 positions=$4,641.05 across 67 names (traded today: True)
+2026-10-13T20:02:48+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
