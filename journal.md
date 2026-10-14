@@ -476,3 +476,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-14T13:41:00+00:00  INFO    BUY  OKTA   weight=1.17% delta=$+24.71
 2026-10-14T13:41:00+00:00  INFO    SELL JBL    weight=0.00% delta=$-10.00
 2026-10-14T13:41:06+00:00  INFO  run recorded in state/last_run.json
+2026-10-14T20:02:44+00:00  INFO  === momentum close-of-day summary 2026-10-14 ===
+2026-10-14T20:02:44+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-14T20:02:47+00:00  INFO  session P&L: -114.00 ($4,685.36 at the open -> $4,571.36 at the close, 391 minute marks)
+2026-10-14T20:02:47+00:00  INFO  close-of-day: equity=$4,571.30 positions=$0.00 across 0 names (traded today: True)
+2026-10-14T20:02:47+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
