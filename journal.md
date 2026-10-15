@@ -483,3 +483,8 @@ Append-only log of every run. Written by run_daily.py.
 2026-10-14T20:02:47+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
 2026-10-15T13:31:01+00:00  INFO  === momentum daily run 2026-10-15 (execute=True) ===
 2026-10-15T13:31:01+00:00  HALT  HALT file present at /home/runner/work/botting-momentum/botting-momentum/HALT — refusing to trade. Delete it to resume.
+2026-10-15T20:02:51+00:00  INFO  === momentum close-of-day summary 2026-10-15 ===
+2026-10-15T20:02:52+00:00  INFO  summarising Alpaca LIVE account 351932452
+2026-10-15T20:02:52+00:00  INFO  session P&L: +0.54 ($4,571.30 at the open -> $4,571.84 at the close, 391 minute marks)
+2026-10-15T20:02:52+00:00  INFO  close-of-day: equity=$4,571.84 positions=$0.00 across 0 names (traded today: False)
+2026-10-15T20:02:52+00:00  WARN  close-of-day email did not send; leaving the day open so the later fire retries
