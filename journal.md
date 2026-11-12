@@ -635,3 +635,6 @@ Append-only log of every run. Written by run_daily.py.
 2026-11-11T14:31:07+00:00  INFO  === momentum daily run 2026-11-11 (execute=True) ===
 2026-11-11T14:31:07+00:00  HALT  HALT file present at /home/runner/work/botting-momentum/botting-momentum/HALT — refusing to trade. Delete it to resume.
 2026-11-11T14:31:07+00:00  WARN  STALE: no completed run since 2026-10-14 (20 trading days). Latest attempt: HALT file present
+2026-11-12T14:31:04+00:00  INFO  === momentum daily run 2026-11-12 (execute=True) ===
+2026-11-12T14:31:04+00:00  HALT  HALT file present at /home/runner/work/botting-momentum/botting-momentum/HALT — refusing to trade. Delete it to resume.
+2026-11-12T14:31:04+00:00  WARN  STALE: no completed run since 2026-10-14 (21 trading days). Latest attempt: HALT file present
